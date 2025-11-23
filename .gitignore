@@ -1,0 +1,135 @@
+############################
+# Node + TypeScript Common #
+############################
+
+# Node modules
+node_modules/
+**/node_modules/
+
+# Build output
+dist/
+build/
+out/
+.next/
+.next/**
+.next/cache/
+
+# TypeScript
+*.tsbuildinfo
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+################
+# Environment  #
+################
+
+.env
+.env.*
+!.env.example
+
+# Keys / Secrets
+*.pem
+*.key
+*.crt
+*.pfx
+
+#############################
+# Editor / OS Junk Cleanup  #
+#############################
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# IntelliJ / JetBrains
+.idea/
+
+##################
+# Frontend (Next.js)
+##################
+
+.next/
+.next/cache/
+app/.next/
+app/.next/**
+
+# Static builds
+public/build/
+
+# Next.js Export
+out/
+
+# Production bundle
+*.vercel/
+.vercel/
+
+#######################
+# Backend (Express/TS)
+#######################
+
+backend/dist/
+backend/.tmp/
+backend/coverage/
+backend/uploads/
+
+# PM2 logs
+.pids
+*.pid
+*.seed
+*.pid.lock
+
+##################
+# Docker
+##################
+
+# Docker
+docker-compose.override.yml
+docker-data/
+docker/*.env
+docker/*.log
+
+# Build cache
+**/.docker/
+
+##################
+# Misc
+##################
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Temp
+tmp/
+temp/
+
+# Test snapshots
+*.snap
+
+# Ignore local cache
+.cache/
+.eslintcache
+stylelintcache

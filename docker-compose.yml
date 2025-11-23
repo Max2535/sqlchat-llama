@@ -1,0 +1,86 @@
+version: '3.9'
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver_container
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y                      # ยอมรับข้อตกลงการใช้งาน
+      - SA_PASSWORD=YourStrong@Passw0rd    # กำหนดรหัสผ่านผู้ดูแลระบบ
+      - MSSQL_PID=Express                  # เลือก Edition (Developer, Express, Standard)
+    volumes:
+      - sqlserver_data:/var/opt/mssql      # Mount volume สำหรับเก็บข้อมูล
+  backend:
+    image: node:18
+    working_dir: /app
+    volumes:
+      - ./backend:/app
+    environment:
+      - NODE_ENV=development
+      - PORT=4000
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - OLLAMA_MODEL=llama3
+      - MSSQL_SERVER=sqlserver
+      - MSSQL_PORT=1433
+      - MSSQL_USER=sa
+      - MSSQL_PASSWORD=YourStrong@Passw0rd
+      - MSSQL_DB=
+      - CHOKIDAR_USEPOLLING=true
+    command: sh -c "npm install; npm run dev"
+    ports:
+      - "4000:4000"
+    depends_on:
+      - sqlserver
+      - ollama
+  ollama:
+    image: ollama/ollama
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: unless-stopped
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:latest
+    container_name: open-webui
+    ports:
+      - "8080:8080"
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - PORT=8080
+    volumes:
+      - openwebui_data:/app/backend/data
+    restart: unless-stopped
+    depends_on:
+      - ollama
+  frontend:
+    image: node:18
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_BACKEND_URL=http://localhost:4000
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+    command: sh -c "npm install; npm run dev"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  sqlserver_data:
+  ollama_data:
+  openwebui_data:
+
+# docker-compose up -d
+# docker-compose logs -f ollama
+# curl http://localhost:11434/api/pull -d '{"name": "llama3"}'
+# docker exec ollama ollama pull llama3
+# docker exec ollama ollama pulll lama3.1
+# docker exec ollama ollama pull llama3.2
+# docker exec ollama ollama pull gpt-oss
+#  curl http://localhost:11434/api/tags
