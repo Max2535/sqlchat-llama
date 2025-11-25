@@ -107,13 +107,15 @@ export default function SqlChat() {
 
     return (
         <div className="relative isolate overflow-hidden py-10 px-4 lg:px-0">
-            <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_20%_20%,rgba(56,189,248,0.08),transparent_25%),radial-gradient(circle_at_80%_10%,rgba(94,234,212,0.07),transparent_28%),radial-gradient(circle_at_50%_70%,rgba(236,72,153,0.08),transparent_23%)]" />
-            <div className="pointer-events-none absolute inset-x-0 top-10 -z-10 h-60 bg-gradient-to-r from-sky-500/20 via-transparent to-emerald-400/20 blur-3xl" />
+            <div className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(circle_at_15%_20%,rgba(129,140,248,0.15),transparent_30%),radial-gradient(circle_at_85%_18%,rgba(248,113,113,0.12),transparent_32%),radial-gradient(circle_at_50%_75%,rgba(236,72,153,0.1),transparent_26%)]" />
+            <div className="pointer-events-none absolute inset-x-0 top-6 -z-10 h-72 bg-[radial-gradient(circle_at_40%_10%,rgba(251,191,36,0.08),transparent_38%),radial-gradient(circle_at_70%_5%,rgba(56,189,248,0.1),transparent_40%)] blur-3xl" />
+            <div className="pointer-events-none absolute inset-0 -z-30 bg-[linear-gradient(120deg,rgba(255,255,255,0.04)_12%,transparent_12%,transparent_50%,rgba(255,255,255,0.04)_50%,rgba(255,255,255,0.04)_62%,transparent_62%,transparent)] bg-[length:18px_18px] opacity-10" />
 
             <div className="w-full max-w-6xl mx-auto flex flex-col gap-6">
-                <div className="relative overflow-hidden rounded-3xl border border-sky-100/40 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 shadow-2xl ring-1 ring-sky-500/20">
-                    <div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(255,255,255,0.04)_25%,transparent_25%,transparent_50%,rgba(255,255,255,0.04)_50%,rgba(255,255,255,0.04)_75%,transparent_75%,transparent)] bg-[length:18px_18px] opacity-20" />
-                    <div className="absolute right-6 top-6 h-32 w-32 rounded-full bg-sky-500/30 blur-3xl" />
+                <div className="relative overflow-hidden rounded-3xl border border-fuchsia-100/30 bg-gradient-to-br from-[#0c1224] via-[#0f172a] to-[#111827] shadow-2xl ring-1 ring-fuchsia-500/20">
+                    <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.05)_18%,transparent_18%,transparent_48%,rgba(255,255,255,0.05)_48%,rgba(255,255,255,0.05)_68%,transparent_68%,transparent)] bg-[length:18px_18px] opacity-10" />
+                    <div className="absolute right-6 top-6 h-32 w-32 rounded-full bg-gradient-to-br from-sky-400/25 via-fuchsia-400/25 to-amber-300/25 blur-3xl" />
+                    <div className="absolute left-8 bottom-6 h-16 w-16 rounded-full bg-gradient-to-br from-indigo-400/20 to-transparent blur-2xl" />
                     <div className="relative p-8 lg:p-12 flex flex-col gap-8 text-white">
                         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                             <div className="space-y-2">
@@ -157,15 +159,15 @@ export default function SqlChat() {
                         <div className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
                             <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-wide text-slate-200">
                                 <span className="rounded-full bg-emerald-500/20 px-3 py-1 text-emerald-100 ring-1 ring-emerald-400/30">Turbo ready</span>
-                                <span className="rounded-full bg-sky-500/20 px-3 py-1 text-sky-100 ring-1 ring-sky-400/30">Strong UX</span>
-                                <span className="rounded-full bg-pink-500/20 px-3 py-1 text-pink-100 ring-1 ring-pink-400/30">Bold gradients</span>
+                                <span className="rounded-full bg-indigo-500/20 px-3 py-1 text-indigo-100 ring-1 ring-indigo-400/30">Twilight CSS</span>
+                                <span className="rounded-full bg-fuchsia-500/20 px-3 py-1 text-fuchsia-100 ring-1 ring-fuchsia-400/30">Bold gradients</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div className="grid gap-4 lg:grid-cols-3">
-                    <div className="rounded-2xl border border-slate-800/50 bg-slate-900/70 p-5 shadow-xl backdrop-blur">
+                    <div className="rounded-2xl border border-indigo-900/60 bg-[#0f1324]/80 p-5 shadow-xl backdrop-blur">
                         <div className="flex items-center justify-between gap-2">
                             <div>
                                 <h2 className="text-lg font-bold text-white">1. โหลด Schema จากฐานข้อมูล</h2>
@@ -179,7 +181,7 @@ export default function SqlChat() {
                         </div>
                         <div className="mt-4 flex gap-2">
                             <button
-                                className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-sky-500 to-emerald-400 px-4 py-2 text-sm font-semibold text-slate-950 shadow-[0_12px_30px_-12px_rgba(56,189,248,0.8)] transition hover:-translate-y-0.5 hover:from-sky-600 hover:to-emerald-500 hover:shadow-[0_16px_40px_-12px_rgba(56,189,248,0.8)] disabled:cursor-not-allowed disabled:opacity-60"
+                                className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-400 via-fuchsia-400 to-amber-300 px-4 py-2 text-sm font-semibold text-slate-950 shadow-[0_12px_30px_-12px_rgba(99,102,241,0.8)] transition hover:-translate-y-0.5 hover:from-indigo-500 hover:via-fuchsia-500 hover:to-amber-400 hover:shadow-[0_16px_40px_-12px_rgba(244,114,182,0.85)] disabled:cursor-not-allowed disabled:opacity-60"
                                 onClick={() => loadSchema(true)}
                                 disabled={schemaLoading}
                             >
@@ -197,7 +199,7 @@ export default function SqlChat() {
                                 {schemaError}
                             </div>
                         )}
-                        <div className="mt-4 rounded-xl border border-slate-800 bg-slate-950/60 p-3 shadow-inner">
+                        <div className="mt-4 rounded-xl border border-indigo-900 bg-[#0c1222]/80 p-3 shadow-inner">
                             <div className="mb-2 flex items-center justify-between text-xs text-slate-400">
                                 <span>โครงสร้างตาราง</span>
                                 <span>{schema ? Object.keys(schema).length : 0} tables</span>
@@ -212,7 +214,7 @@ export default function SqlChat() {
                         </div>
                     </div>
 
-                    <div className="lg:col-span-2 rounded-2xl border border-slate-800/50 bg-slate-900/70 p-5 shadow-xl backdrop-blur">
+                    <div className="lg:col-span-2 rounded-2xl border border-indigo-900/60 bg-[#0f1324]/80 p-5 shadow-xl backdrop-blur">
                         <div className="flex flex-col gap-4">
                             <div className="flex flex-wrap items-center justify-between gap-2">
                                 <div>
@@ -229,7 +231,7 @@ export default function SqlChat() {
                                 {suggestionPhrases.map((suggestion) => (
                                     <button
                                         key={suggestion}
-                                        className="rounded-full border border-slate-700 bg-slate-800 px-4 py-2 text-xs font-semibold text-slate-100 shadow-sm transition hover:border-sky-400 hover:bg-slate-800/80 hover:text-white"
+                                        className="rounded-full border border-indigo-800/70 bg-[#131b2c] px-4 py-2 text-xs font-semibold text-slate-100 shadow-sm transition hover:border-fuchsia-400 hover:bg-[#1b2540] hover:text-white"
                                         onClick={() => setInput(suggestion)}
                                     >
                                         {suggestion}
@@ -237,13 +239,13 @@ export default function SqlChat() {
                                 ))}
                             </div>
 
-                            <div className="min-h-[320px] space-y-3 rounded-xl border border-slate-800 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-3 shadow-inner">
+                            <div className="min-h-[320px] space-y-3 rounded-xl border border-indigo-900 bg-gradient-to-br from-[#0f1224] via-[#0f172a] to-[#0b1222] p-3 shadow-inner">
                                 {messages.map((m, idx) => (
                                     <div key={idx} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
                                         <div
                                             className={`max-w-2xl space-y-2 rounded-2xl border px-4 py-3 shadow-lg ${
                                                 m.role === "user"
-                                                    ? "border-sky-400/40 bg-gradient-to-br from-sky-600 via-sky-500 to-emerald-400 text-white"
+                                                    ? "border-fuchsia-400/40 bg-gradient-to-br from-indigo-500 via-fuchsia-500 to-amber-300 text-slate-950"
                                                     : "border-slate-700 bg-slate-800 text-slate-50"
                                             }`}
                                         >
@@ -266,15 +268,15 @@ export default function SqlChat() {
                                     </div>
                                 ))}
                                 {messages.length === 0 && (
-                                    <div className="flex h-full items-center justify-center rounded-lg border border-dashed border-slate-700 bg-slate-950/60 p-6 text-center text-sm text-slate-400">
+                                    <div className="flex h-full items-center justify-center rounded-lg border border-dashed border-indigo-800 bg-[#0c1222]/70 p-6 text-center text-sm text-slate-400">
                                         โหลด schema แล้วลองถามเช่น: "ดูรายการ food_logs 10 แถวแรก" หรือ "สรุปยอด calories วันนี้"
                                     </div>
                                 )}
                             </div>
 
-                            <div className="flex flex-col gap-3 rounded-xl border border-slate-800 bg-slate-950/60 p-3 shadow-inner">
+                            <div className="flex flex-col gap-3 rounded-xl border border-indigo-900 bg-[#0c1222]/80 p-3 shadow-inner">
                                 <textarea
-                                    className="w-full rounded-xl border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-50 shadow-sm transition focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-400/40 disabled:bg-slate-800"
+                                    className="w-full rounded-xl border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-50 shadow-sm transition focus:border-fuchsia-400 focus:outline-none focus:ring-2 focus:ring-fuchsia-400/30 disabled:bg-slate-800"
                                     rows={3}
                                     value={input}
                                     disabled={loading}
@@ -290,7 +292,7 @@ export default function SqlChat() {
                                 <div className="flex items-center justify-between gap-2">
                                     <p className="text-xs text-slate-400">รองรับการส่งข้อความหลายบรรทัด กด Enter เพื่อส่งข้อความ</p>
                                     <button
-                                        className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-sky-500 via-sky-600 to-emerald-400 px-6 py-2 text-sm font-bold text-slate-950 shadow-[0_12px_30px_-12px_rgba(56,189,248,0.9)] transition hover:-translate-y-0.5 hover:from-sky-600 hover:via-sky-700 hover:to-emerald-500 hover:shadow-[0_16px_40px_-12px_rgba(56,189,248,0.95)] disabled:cursor-not-allowed disabled:opacity-60"
+                                        className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-400 via-fuchsia-500 to-amber-300 px-6 py-2 text-sm font-bold text-slate-950 shadow-[0_12px_30px_-12px_rgba(129,140,248,0.9)] transition hover:-translate-y-0.5 hover:from-indigo-500 hover:via-fuchsia-600 hover:to-amber-400 hover:shadow-[0_16px_40px_-12px_rgba(244,114,182,0.95)] disabled:cursor-not-allowed disabled:opacity-60"
                                         onClick={handleSend}
                                         disabled={loading}
                                     >
