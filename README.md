@@ -90,3 +90,24 @@ Highlights
 
 Use this structure as a quick reference for navigation and responsibilities of each file/folder.
 
+## 🧭 Quick start
+
+1) **Backend**
+```
+cd backend
+cp .env.example .env   # fill in MSSQL + Ollama variables
+npm install
+npm run dev
+```
+
+2) **Frontend**
+```
+cd frontend
+npm install
+npm run dev
+```
+
+3) **Load schema & chat**
+- In the UI, click **"Refresh schema"** to pull the live MSSQL schema (uses backend env connection).
+- Ask questions in natural language; the assistant will show generated SQL and results.
+
