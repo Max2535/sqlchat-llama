@@ -92,11 +92,8 @@ export default function SqlChat() {
     const [schemaError, setSchemaError] = useState<string | null>(null);
 
     const schemaSummary = useMemo(() => {
-        if (!schema) return "";
-
-        return Object.entries(schema)
-            .map(([table, columns]) => `${table}: ${columns.map((col) => `${col.name} (${col.type})`).join(", ")}`)
-            .join("\n");
+        if (!schema) return null;
+        return schema;
     }, [schema]);
 
     useEffect(() => {
@@ -265,19 +262,60 @@ export default function SqlChat() {
                         </div>
                     )}
 
-                    <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50 p-3">
-                        <div className="mb-2 flex items-center justify-between">
-                            <span className="text-xs font-medium text-slate-600">Tables</span>
-                            <span className="rounded-md bg-slate-200 px-2 py-0.5 text-xs font-medium text-slate-700">
+                    <div className="mt-4 rounded-lg border border-slate-200 bg-white overflow-hidden">
+                        <div className="bg-slate-100 border-b border-slate-200 px-3 py-2 flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                                <svg className="h-4 w-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+                                </svg>
+                                <span className="text-xs font-semibold text-slate-700">Tables</span>
+                            </div>
+                            <span className="rounded bg-slate-200 px-2 py-0.5 text-xs font-semibold text-slate-700">
                                 {schema ? Object.keys(schema).length : 0}
                             </span>
                         </div>
-                        <div className="h-72 overflow-y-auto whitespace-pre-wrap rounded-md border border-slate-200 bg-white px-3 py-2.5 text-xs font-mono text-slate-700">
+                        <div className="h-72 overflow-y-auto bg-white">
                             {schema ? (
-                                schemaSummary || "Schema is empty"
+                                <div className="divide-y divide-slate-200">
+                                    {Object.entries(schema).map(([tableName, columns]) => (
+                                        <div key={tableName} className="group">
+                                            {/* Table Header */}
+                                            <div className="flex items-center gap-2 bg-slate-50 px-3 py-2 hover:bg-slate-100 transition-colors">
+                                                <svg className="h-3.5 w-3.5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
+                                                </svg>
+                                                <span className="text-xs font-semibold text-slate-900">{tableName}</span>
+                                                <span className="text-xs text-slate-500">({columns.length})</span>
+                                            </div>
+                                            {/* Columns */}
+                                            <div className="bg-white">
+                                                {columns.map((col, idx) => (
+                                                    <div
+                                                        key={idx}
+                                                        className="flex items-center gap-2 px-6 py-1.5 hover:bg-slate-50 border-l-2 border-transparent hover:border-blue-500 transition-all"
+                                                    >
+                                                        <svg className="h-3 w-3 text-slate-400" fill="currentColor" viewBox="0 0 20 20">
+                                                            <path fillRule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clipRule="evenodd" />
+                                                        </svg>
+                                                        <span className="text-xs font-medium text-slate-700 min-w-[120px]">
+                                                            {col.name}
+                                                        </span>
+                                                        <span className="text-xs text-slate-500 font-mono bg-slate-100 px-2 py-0.5 rounded">
+                                                            {col.type}
+                                                        </span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
                             ) : (
-                                <div className="flex items-center justify-center h-full text-slate-400 text-center text-sm">
-                                    ยังไม่ได้โหลด schema
+                                <div className="flex flex-col items-center justify-center h-full text-slate-400 text-center p-4">
+                                    <svg className="h-12 w-12 mb-2 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
+                                    </svg>
+                                    <p className="text-sm font-medium text-slate-500">ยังไม่ได้โหลด schema</p>
+                                    <p className="text-xs text-slate-400 mt-1">กดปุ่ม Refresh เพื่อโหลด</p>
                                 </div>
                             )}
                         </div>
