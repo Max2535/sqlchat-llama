@@ -24,6 +24,65 @@ const Spinner = () => (
     </div>
 );
 
+// Result table component
+const ResultTable = ({ data }: { data: any }) => {
+    // Check if data is an array with objects
+    if (!Array.isArray(data) || data.length === 0) {
+        return (
+            <pre className="overflow-x-auto rounded-md border border-slate-200 bg-slate-50 px-3 py-2.5 text-xs text-slate-700 font-mono">
+                {JSON.stringify(data, null, 2)}
+            </pre>
+        );
+    }
+
+    // Get column names from first object
+    const columns = Object.keys(data[0]);
+
+    return (
+        <div className="overflow-x-auto rounded-md border border-slate-200">
+            <table className="min-w-full divide-y divide-slate-200 text-xs">
+                <thead className="bg-slate-100">
+                    <tr>
+                        <th className="px-3 py-2 text-left font-semibold text-slate-700 border-r border-slate-200">
+                            #
+                        </th>
+                        {columns.map((col) => (
+                            <th
+                                key={col}
+                                className="px-3 py-2 text-left font-semibold text-slate-700 border-r border-slate-200 last:border-r-0"
+                            >
+                                {col}
+                            </th>
+                        ))}
+                    </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-slate-200">
+                    {data.map((row, idx) => (
+                        <tr key={idx} className="hover:bg-slate-50">
+                            <td className="px-3 py-2 text-slate-500 border-r border-slate-200 font-medium">
+                                {idx + 1}
+                            </td>
+                            {columns.map((col) => (
+                                <td
+                                    key={col}
+                                    className="px-3 py-2 text-slate-700 border-r border-slate-200 last:border-r-0"
+                                >
+                                    {row[col] !== null && row[col] !== undefined
+                                        ? String(row[col])
+                                        : <span className="text-slate-400 italic">null</span>}
+                                </td>
+                            ))}
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+            <div className="bg-slate-50 px-3 py-2 text-xs text-slate-500 border-t border-slate-200">
+                <span className="font-medium">{data.length}</span> แถว
+            </div>
+        </div>
+    );
+};
+
 export default function SqlChat() {
     const [input, setInput] = useState("");
     const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -292,12 +351,12 @@ export default function SqlChat() {
                                         {/* Result Block */}
                                         {m.result && (
                                             <div className="relative mt-2">
-                                                <div className="absolute right-2 top-2 rounded bg-blue-600 px-2 py-0.5 text-[10px] font-medium text-white">
-                                                    Result
+                                                <div className="mb-2 flex items-center gap-2">
+                                                    <div className="rounded bg-blue-600 px-2 py-0.5 text-[10px] font-medium text-white">
+                                                        Result
+                                                    </div>
                                                 </div>
-                                                <pre className="overflow-x-auto rounded-md border border-slate-200 bg-slate-50 px-3 py-2.5 text-xs text-slate-700 font-mono">
-                                                    {JSON.stringify(m.result, null, 2)}
-                                                </pre>
+                                                <ResultTable data={m.result} />
                                             </div>
                                         )}
                                     </div>
