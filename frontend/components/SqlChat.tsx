@@ -90,15 +90,41 @@ export default function SqlChat() {
     const [schema, setSchema] = useState<Record<string, { name: string; type: string }[]> | null>(null);
     const [schemaLoading, setSchemaLoading] = useState(false);
     const [schemaError, setSchemaError] = useState<string | null>(null);
+    const [showMemory, setShowMemory] = useState(false);
 
     const schemaSummary = useMemo(() => {
         if (!schema) return null;
         return schema;
     }, [schema]);
 
+    // Load messages from localStorage on mount
     useEffect(() => {
         loadSchema();
+        const savedMessages = localStorage.getItem('sqlchat-messages');
+        if (savedMessages) {
+            try {
+                const parsed = JSON.parse(savedMessages);
+                setMessages(parsed);
+            } catch (e) {
+                console.error('Failed to load messages from localStorage', e);
+            }
+        }
     }, []);
+
+    // Save messages to localStorage whenever they change
+    useEffect(() => {
+        if (messages.length > 0) {
+            localStorage.setItem('sqlchat-messages', JSON.stringify(messages));
+        }
+    }, [messages]);
+
+    // Clear memory function
+    const clearMemory = () => {
+        if (confirm('คุณต้องการล้างประวัติการสนทนาทั้งหมดใช่ไหม?')) {
+            setMessages([]);
+            localStorage.removeItem('sqlchat-messages');
+        }
+    };
 
     async function loadSchema(showToast = false) {
         setSchemaLoading(true);
@@ -192,9 +218,20 @@ export default function SqlChat() {
                                 Powered by Llama + MSSQL
                             </p>
                         </div>
-                        <div className="inline-flex items-center gap-2 self-start rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 px-4 py-2 text-sm">
-                            <span className={`h-2 w-2 rounded-full ${schema ? 'bg-emerald-400' : 'bg-slate-400'}`} />
-                            <span className="font-medium">{schemaStatus.label}</span>
+                        <div className="flex items-center gap-2">
+                            <div className="inline-flex items-center gap-2 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 px-4 py-2 text-sm">
+                                <span className={`h-2 w-2 rounded-full ${schema ? 'bg-emerald-400' : 'bg-slate-400'}`} />
+                                <span className="font-medium">{schemaStatus.label}</span>
+                            </div>
+                            {messages.length > 0 && (
+                                <div className="inline-flex items-center gap-2 rounded-lg bg-purple-500/20 backdrop-blur-sm border border-purple-300/30 px-4 py-2 text-sm">
+                                    <svg className="h-4 w-4 text-purple-300" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                                        <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd" />
+                                    </svg>
+                                    <span className="font-medium text-purple-100">{messages.length} ข้อความ</span>
+                                </div>
+                            )}
                         </div>
                     </div>
 
@@ -220,35 +257,50 @@ export default function SqlChat() {
                         </span>
                     </div>
 
-                    <div className="flex gap-2">
-                        <button
-                            className="flex-1 inline-flex items-center justify-center gap-2 rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60"
-                            onClick={() => loadSchema(true)}
-                            disabled={schemaLoading}
-                        >
-                            {schemaLoading ? (
-                                <>
-                                    <Spinner />
-                                    โหลดอยู่...
-                                </>
-                            ) : (
-                                <>
-                                    <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                                    </svg>
-                                    Refresh
-                                </>
-                            )}
-                        </button>
-                        <button
-                            className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-600 transition-colors hover:bg-slate-50"
-                            onClick={() => setMessages([])}
-                            title="ล้างข้อความ"
-                        >
-                            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                            </svg>
-                        </button>
+                    <div className="space-y-2">
+                        <div className="flex gap-2">
+                            <button
+                                className="flex-1 inline-flex items-center justify-center gap-2 rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60"
+                                onClick={() => loadSchema(true)}
+                                disabled={schemaLoading}
+                            >
+                                {schemaLoading ? (
+                                    <>
+                                        <Spinner />
+                                        โหลดอยู่...
+                                    </>
+                                ) : (
+                                    <>
+                                        <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                        </svg>
+                                        Refresh
+                                    </>
+                                )}
+                            </button>
+                            <button
+                                className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-600 transition-colors hover:bg-slate-50"
+                                onClick={() => setMessages([])}
+                                title="ล้างข้อความแชท"
+                            >
+                                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                            </button>
+                        </div>
+                        {messages.length > 0 && (
+                            <button
+                                className="w-full inline-flex items-center justify-center gap-2 rounded-lg border border-purple-200 bg-purple-50 px-4 py-2 text-sm font-medium text-purple-700 transition-colors hover:bg-purple-100"
+                                onClick={clearMemory}
+                                title="ล้าง AI Memory"
+                            >
+                                <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                                    <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd" />
+                                </svg>
+                                <span>ล้าง Memory ({messages.length})</span>
+                            </button>
+                        )}
                     </div>
 
                     {schemaError && (
